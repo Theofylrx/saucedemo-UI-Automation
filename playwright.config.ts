@@ -28,6 +28,7 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html'],
+    ['playwright-ctrf-json-reporter', { outputDir: './test-results/' }],
   ],  
   // Folder for test artifacts such as screenshots, videos, traces, etc.
   outputDir: outputDir,

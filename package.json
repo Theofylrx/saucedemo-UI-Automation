@@ -4,8 +4,8 @@
   "description": "Saucedemo UI Automation Tests using playwright and Typescript.",
   "main": "index.js",
   "scripts": {
-    "test:saucedemo": "ENVIRONMENT=PRODUCTION npx playwright test --project=chromium",
-    "debug:saucedemo": "ENVIRONMENT=PRODUCTION npx playwright test --ui --project=chromium"
+    "test:saucedemo": "ENVIRONMENT=DEMO npx playwright test --project=chromium",
+    "debug:saucedemo": "ENVIRONMENT=DEMO npx playwright test --ui --project=chromium"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "homepage": "https://github.com/Theofylrx/saucedemo-UI-Automation#readme",
   "devDependencies": {
     "@playwright/test": "^1.52.0",
-    "@types/node": "^22.15.17"
+    "@types/node": "^22.15.17",
+    "playwright-ctrf-json-reporter": "^0.0.20"
   }
 }
