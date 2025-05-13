@@ -43,6 +43,9 @@ runs:
     - name: Run Playwright tests
       shell: bash
       run: |
+        if [[ "${{ inputs.browser }}" == "firefox" ]]; then
+          export HOME=/root
+        fi
         ENVIRONMENT="${{ inputs.environment }}" npx playwright test --grep "${{ inputs.tag }}" --project="${{ inputs.browser }}" --shard="${{ inputs.shardIndex }}/${{ inputs.shardTotal }}"
 
     - name: Upload Github Artifacts
