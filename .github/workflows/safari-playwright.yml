@@ -1,4 +1,4 @@
-name: Firefox > Saucedemo UI Playwright Tests with Typescript
+name: Safari > Saucedemo UI Playwright Tests with Typescript
 on:
   #schedule:
     # Schedule to run 8 times a day at specific hours in UTC+2
