@@ -40,14 +40,6 @@ runs:
       shell: bash
       run: npm ci
 
-    # - name: install playwright test
-    #   shell: bash
-    #   run: npm install @playwright/test
-
-    # - name: Install Playwright Browsers
-    #   shell: bash
-    #   run: npx playwright install --with-deps
-
     - name: Run Playwright tests
       shell: bash
       run: |
