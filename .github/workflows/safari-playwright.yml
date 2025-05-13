@@ -1,4 +1,4 @@
-name: Saucedemo UI Playwright Tests with Typescript
+name: Safari > Saucedemo UI Playwright Tests with Typescript
 on:
   push:
     branches: 
@@ -27,7 +27,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npm run test:saucedemo --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+      run: npm run test:saucedemo-safari --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:

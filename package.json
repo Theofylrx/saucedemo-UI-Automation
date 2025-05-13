@@ -6,7 +6,7 @@
   "scripts": {
     "test:saucedemo-chromium": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --project=chromium",
     "test:saucedemo-firefox": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --project=firefox",
-    "test:saucedemo-webkit": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --project=safari",
+    "test:saucedemo-safari": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --project=safari",
     "debug:saucedemo": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --ui --project=chromium"
   },
   "repository": {

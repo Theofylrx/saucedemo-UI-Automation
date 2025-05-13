@@ -1,0 +1,80 @@
+name: Chrome > Saucedemo UI Playwright Tests with Typescript
+on:
+  push:
+    branches: 
+      - main
+jobs:
+  run-ui-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
+
+    container:
+      image: mcr.microsoft.com/playwright:v1.44.0-jammy
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+    - name: Install dependencies
+      run: npm ci
+    - name: install playwright test
+      run: npm install @playwright/test
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    - name: Run Playwright tests
+      run: npm run test:saucedemo-chromium --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+    - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: saucedemo-report-${{ matrix.shardIndex }}
+        path: saucedemo-report/
+        retention-days: 30
+    - name: Upload Github Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: saucedemo-report-${{ matrix.shardIndex }}-${{ matrix.shardTotal }}
+        path: |
+          ./saucedemo-report/
+          ./test-results/
+          ./test-results/*
+        retention-days: 1
+      if: always()
+
+  merge-reports:
+    needs: [run-ui-tests]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download All Reports
+        uses: actions/download-artifact@v4
+        with:
+          path: all-reports
+          pattern: saucedemo-report-*
+          merge-multiple: false
+
+      - name: Merge All CTRF Test Summary Results
+        shell: bash
+        run: |
+          mkdir -p ctrf-reports
+          find all-reports/saucedemo-report-*/test-results -name 'ctrf-report.json' | while read file; do
+            cp "$file" "ctrf-reports/$(basename $(dirname $(dirname $file)))-ctrf-report.json"
+          done
+          npx merge-ctrf ctrf-reports
+
+      - name: Publish CTRF Test Summary Results
+        shell: bash
+        run: npx github-actions-ctrf ctrf-reports/ctrf-report.json
+        if: always()
