@@ -1,4 +1,4 @@
-import test from "../lib/helpers/basetest";
+import test from "../lib/helpers/baseTest";
 
 test.beforeEach(async ({ basePage }) => {
     await basePage.goto();

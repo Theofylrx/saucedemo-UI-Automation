@@ -1,0 +1,65 @@
+name: 'workflow Template'
+
+description: 'reusable workflow to run Playwright tests'
+
+inputs:
+  environment:
+    description: 'Environment for the tests (e.g., PRODUCTION, DEMO)'
+    type: string
+    required: true
+    default: 'DEMO'
+  tag:
+    type: string
+    description: 'Tag for the tests (e.g., @critical)'
+    required: true
+  browser:
+    type: string
+    description: 'Browser to run the tests on (e.g., chromium, firefox, safari)'
+    required: true
+  shardIndex:
+    type: string
+    description: 'Index of the shard being run (e.g., 1, 2, 3)'
+    required: true
+  shardTotal:
+    type: string
+    description: 'Total number of shards (e.g., 4)'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+
+    - name: Install dependencies
+      shell: bash
+      run: npm ci
+
+    # - name: install playwright test
+    #   shell: bash
+    #   run: npm install @playwright/test
+
+    # - name: Install Playwright Browsers
+    #   shell: bash
+    #   run: npx playwright install --with-deps
+
+    - name: Run Playwright tests
+      shell: bash
+      run: |
+        ENVIRONMENT="${{ inputs.environment }}" npx playwright test --grep "${{ inputs.tag }}" --project="${{ inputs.browser }}" --shard="${{ inputs.shardIndex }}/${{ inputs.shardTotal }}"
+
+    - name: Upload Github Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: saucedemo-report-${{ inputs.shardIndex }}-${{ inputs.shardTotal }}
+        path: |
+          ./saucedemo-report/
+          ./test-results/
+          ./test-results/*
+        retention-days: 1
+      if: always()
