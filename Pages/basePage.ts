@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test';
 import config from '../lib/config/config';
 
-export class BasePage {
+export class basePage {
   readonly page: Page;
 
   constructor(page: Page) {

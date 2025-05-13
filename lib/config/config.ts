@@ -1,3 +1,4 @@
+import { Config } from "../models/config";
 import { demo } from "./environments/demo";
 import { production } from "./environments/production";
 

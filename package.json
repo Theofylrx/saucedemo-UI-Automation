@@ -4,8 +4,10 @@
   "description": "Saucedemo UI Automation Tests using playwright and Typescript.",
   "main": "index.js",
   "scripts": {
-    "test:saucedemo": "ENVIRONMENT=DEMO npx playwright test --project=chromium",
-    "debug:saucedemo": "ENVIRONMENT=DEMO npx playwright test --ui --project=chromium"
+    "test:saucedemo-chromium": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --project=chromium",
+    "test:saucedemo-firefox": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --project=firefox",
+    "test:saucedemo-webkit": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --project=safari",
+    "debug:saucedemo": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --ui --project=chromium"
   },
   "repository": {
     "type": "git",
