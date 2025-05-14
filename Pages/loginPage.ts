@@ -37,7 +37,6 @@ export class loginPage {
     }
     async Login(userCredentials: user): Promise<string>{
         const user = userCredentials;
-        await this.validateLabels();
         await this.enterUsername(user.username);
         await this.enterPassword(user.password);
         await this.clickLogin();

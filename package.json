@@ -7,7 +7,9 @@
     "test:saucedemo-chromium": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --project=chromium",
     "test:saucedemo-firefox": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --project=firefox",
     "test:saucedemo-safari": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --project=safari",
-    "debug:saucedemo": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --ui --project=chromium"
+    "debug:saucedemo-chromium": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --ui --project=chromium",
+    "debug:saucedemo-firefox": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --ui --project=firefox",
+    "debug:saucedemo-safari": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --ui --project=safari"
   },
   "repository": {
     "type": "git",
