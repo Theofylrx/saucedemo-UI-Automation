@@ -33,7 +33,7 @@ test.describe('Login', () => {
       await loginPage.validateErrorBanner();
       await loginPage.validateErrorMessage(saucedemoTestdata.errors.locked_out_user);
     });
-    test.skip('with problem user',{tag: ['@critical']}, async ({ loginPage }) => {
+    test('with problem user',{tag: ['@critical']}, async ({ loginPage }) => {
       const user: user = saucedemoTestdata.users.problem_user;
       await loginPage.validateLabels();
       await loginPage.Login(user);
