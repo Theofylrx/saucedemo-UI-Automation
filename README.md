@@ -59,9 +59,9 @@ npm run debug:saucedemo-chromium
 ```
 ## Running tests on CI
 
-For each change made and committed and pushed to main on github then the tests get triggered automatically and start running. when tests are done running a report is created and displayed on the pipeline itself.
+For each change made, committed and pushed to main on github, the tests get triggered automatically and start running. When tests are done running a report is created and displayed on the pipeline itself.
 
-View the github flows on this porject for better understanding the setup.
+View the github flows on this project for better understanding the setup.
 
 here's a snippet example:
 ```bash
