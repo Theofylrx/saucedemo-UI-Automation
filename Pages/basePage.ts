@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 import config from '../lib/config/config';
 
 export class basePage {
@@ -13,4 +13,8 @@ export class basePage {
     await this.page.goto(url);
     await this.page.waitForLoadState('domcontentloaded');
   }
+
+  async validatePageURL(path: string): Promise<void> {
+    expect(this.page.url()).toContain(path);
+}
 }

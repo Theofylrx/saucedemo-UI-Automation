@@ -4,9 +4,9 @@ import { loginPage } from '../../Pages/loginPage';
 import { inventoryPage } from '../../Pages/inventoryPage';
 import { cartPage } from '../../Pages/cartPage';
 import { checkoutPage } from '../../Pages/checkoutPage';
-import { SideMenu } from '../../Pages/shared/sideMenu';
-import { footer } from '../../Pages/shared/footer';
-import { mainNavigation } from '../../Pages/shared/mainNavigation';
+import { sideMenu } from '../../Pages/shared-components/sideMenu';
+import { footer } from '../../Pages/shared-components/footer';
+import { mainNavigation } from '../../Pages/shared-components/mainNavigation';
 
 type myFixtures = {
   basePage: basePage;
@@ -14,7 +14,7 @@ type myFixtures = {
   inventoryPage: inventoryPage;
   cartPage: cartPage;
   checkoutPage: checkoutPage;
-  sideMenu: SideMenu;
+  sideMenu: sideMenu;
   footer: footer;
   mainNavigation: mainNavigation;
 }
@@ -36,7 +36,7 @@ const test = baseTest.extend<myFixtures>({
         await use(new checkoutPage(page));
     },
     sideMenu: async ({ page }, use) => {
-        await use(new SideMenu(page));
+        await use(new sideMenu(page));
     },
     footer: async ({ page }, use) => {
         await use(new footer(page));

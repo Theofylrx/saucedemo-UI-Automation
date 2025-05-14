@@ -36,7 +36,7 @@ export default defineConfig({
   timeout: 120000,
   // Maximum time expect() should wait for 60 seconds
   expect: {
-    timeout: 60000,
+    timeout: 2000,
   },
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {

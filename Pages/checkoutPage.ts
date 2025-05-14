@@ -1,6 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { basePage } from "./basePage";
 
-export class checkoutPage {
+export class checkoutPage extends basePage {
     readonly page: Page;
     readonly checkoutInfo: Locator;
     readonly checkoutFirstName: Locator;
@@ -24,6 +25,7 @@ export class checkoutPage {
     readonly checkoutCompleteText: Locator;
     readonly checkoutBackHomeButton: Locator;
     constructor(page: Page) {
+        super(page);
         this.page = page;
         this.checkoutInfo = page.locator('.checkout_info');
         this.checkoutFirstName = page.locator('[data-test="firstName"]');
@@ -46,5 +48,23 @@ export class checkoutPage {
         this.checkoutHeader = page.locator('[data-test="complete-header"]');
         this.checkoutCompleteText = page.locator('[data-test="complete-text"]');
         this.checkoutBackHomeButton = page.locator('[data-test="back-to-products"]');
+    }
+    async gotoCheckoutStepOne(): Promise<void> {
+        await this.goto('/checkout-step-one.html');
+    }
+    async gotoCheckoutStepTwo(): Promise<void> {
+        await this.goto('/checkout-step-two.html');
+    }
+    async gotoCheckoutComplete(): Promise<void> {
+        await this.goto('/checkout-complete.html');
+    }
+    async validateCheckoutStepOnePageURL(): Promise<void> {
+        this.validatePageURL('/checkout-step-one.html');
+    }
+    async validateCheckoutStepTwoPageURL(): Promise<void> {
+        this.validatePageURL('/checkout-step-two.html');
+    }
+    async validateCheckoutCompletePageURL(): Promise<void> {
+        this.validatePageURL('/checkout-complete.html');
     }
 }

@@ -1,28 +1,40 @@
 {
-    "saucedemoTestdata":{
-        "standard_user":{
-            "username": "standard_user",
-            "password": "secret_sauce"
+    "saucedemoTestdata": {
+        "users":{
+            "standard_user":{
+                "username": "standard_user",
+                "password": "secret_sauce"
+            },
+            "locked_out_user":{
+                "username": "locked_out_user",
+                "password": "secret_sauce"
+            },
+            "problem_user":{
+                "username": "problem_user",
+                "password": "secret_sauce"
+            },
+            "performance_glitch_user":{
+                "username": "performance_glitch_user",
+                "password": "secret_sauce"
+            },
+            "error_user":{
+                "username": "error_user",
+                "password": "secret_sauce"
+            },
+            "visual_user":{
+                "username": "visual_user",
+                "password": "secret_sauce"
+            }
         },
-        "locked_out_user":{
-            "username": "locked_out_user",
-            "password": "secret_sauce"
-        },
-        "problem_user":{
-            "username": "problem_user",
-            "password": "secret_sauce"
-        },
-        "performance_glitch_user":{
-            "username": "performance_glitch_user",
-            "password": "secret_sauce"
-        },
-        "error_user":{
-            "username": "error_user",
-            "password": "secret_sauce"
-        },
-        "visual_user":{
-            "username": "visual_user",
-            "password": "secret_sauce"
+        "errors": {
+            "locked_out_user": "Epic sadface: Sorry, this user has been locked out.",
+            "problem_user": "Epic sadface: Problem user",
+            "performance_glitch_user": "Epic sadface: Performance glitch",
+            "error_user": "Epic sadface: Error user",
+            "visual_user": "Epic sadface: Visual user",
+            "username_empty": "Epic sadface: Username is required",
+            "password_empty": "Epic sadface: Password is required",
+            "username_password_empty": "Epic sadface: Username is required"
         }
     }
 }
