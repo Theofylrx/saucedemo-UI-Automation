@@ -13,4 +13,8 @@ export class mainNavigation {
         this.cartBtn = page.locator('[data-test="shopping-cart-link"]');
         this.cartTitle = page.locator('[data-test="title"]');
     }
+
+    async navigateToCart(): Promise<void> {
+        await this.cartBtn.click();
+    }
 }

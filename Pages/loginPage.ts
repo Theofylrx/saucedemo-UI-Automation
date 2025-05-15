@@ -38,10 +38,16 @@ export class loginPage extends basePage{
     }
     async validateLabels(): Promise<void>{
         await expect(this.pageHeader).toBeVisible();
+        await expect(this.pageHeader).toHaveText('Swag Labs');
         await expect(this.loginContainer).toBeVisible();
         await expect(this.usernameTxt).toBeVisible();
+        await expect(this.usernameTxt).toHaveAttribute('placeholder', 'Username');
+        await expect(this.usernameTxt).toBeEditable();
         await expect(this.passwordTxt).toBeVisible();
+        await expect(this.passwordTxt).toHaveAttribute('placeholder', 'Password');
+        await expect(this.passwordTxt).toBeEditable();
         await expect(this.loginBtn).toBeVisible();
+        await expect(this.loginBtn).toBeEnabled();
     }
     async Login(userCredentials: user): Promise<string>{
         const user = userCredentials;

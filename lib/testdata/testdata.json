@@ -1,6 +1,6 @@
 {
     "saucedemoTestdata": {
-        "users":{
+        "account":{
             "standard_user":{
                 "username": "standard_user",
                 "password": "secret_sauce"
@@ -24,6 +24,25 @@
             "visual_user":{
                 "username": "visual_user",
                 "password": "secret_sauce"
+            }
+        },
+        "checkout":{
+            "valid-users":{
+                "john-doe":{
+                    "firstName": "John",
+                    "lastName": "Doe",
+                    "postalCode": "12345"
+                },
+                "jane-doe":{
+                    "firstName": "Jane",
+                    "lastName": "Doe",
+                    "postalCode": "54321"
+                }
+            },
+            "invalid-user":{
+                "firstName": "t",
+                "lastName": "D",
+                "postalCode": "5"
             }
         },
         "errors": {

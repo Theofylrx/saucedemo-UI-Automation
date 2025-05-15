@@ -67,4 +67,19 @@ export class checkoutPage extends basePage {
     async validateCheckoutCompletePageURL(): Promise<void> {
         this.validatePageURL('/checkout-complete.html');
     }
+    async enterFirstName(firstName: string): Promise<void> {
+        await this.checkoutFirstName.fill(firstName);
+    }
+    async enterLastName(lastName: string): Promise<void> {
+        await this.checkoutLastName.fill(lastName);
+    }
+    async enterPostalCode(postalCode: string): Promise<void> {
+        await this.checkoutPostalCode.fill(postalCode);
+    }
+    async clickContinue(): Promise<void> {
+        await this.checkoutContinueButton.click();
+    }
+    async clickCancel(): Promise<void> {
+        await this.checkoutCancelButton.click();
+    }
 }

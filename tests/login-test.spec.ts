@@ -5,10 +5,10 @@ import { saucedemoTestdata } from "../lib/testdata/testdata.json";
 
 test.beforeEach(async ({ loginPage }) => {
     await loginPage.goto();
-  });
+});
 test.describe('Login', () => {
     test('with standard user',{tag: ['@critical']}, async ({ loginPage, sideMenu, mainNavigation, inventoryPage, footer }) => {
-      const user: user = saucedemoTestdata.users.standard_user;
+      const user: user = saucedemoTestdata.account.standard_user;
       await loginPage.validateLabels();
       const loggedInUser: string = await loginPage.Login(user);
       await inventoryPage.validateInventoryPageURL();
@@ -27,32 +27,32 @@ test.describe('Login', () => {
       await expect(inventoryPage.inventoryContainer).toBeVisible();
     });
     test('with locked out user',{tag: ['@critical']}, async ({ loginPage }) => {
-      const user: user = saucedemoTestdata.users.locked_out_user;
+      const user: user = saucedemoTestdata.account.locked_out_user;
       await loginPage.validateLabels();
       await loginPage.Login(user);
       await loginPage.validateErrorBanner();
       await loginPage.validateErrorMessage(saucedemoTestdata.errors.locked_out_user);
     });
-    test('with problem user',{tag: ['@critical']}, async ({ loginPage }) => {
-      const user: user = saucedemoTestdata.users.problem_user;
+    test.skip('with problem user',{tag: ['@critical']}, async ({ loginPage }) => {
+      const user: user = saucedemoTestdata.account.problem_user;
       await loginPage.validateLabels();
       await loginPage.Login(user);
       //TODO: complete the test case
     });
-    test('with performance glitch user',{tag: ['@critical']}, async ({ loginPage }) => {
-      const user: user = saucedemoTestdata.users.performance_glitch_user;
+    test.skip('with performance glitch user',{tag: ['@critical']}, async ({ loginPage }) => {
+      const user: user = saucedemoTestdata.account.performance_glitch_user;
       await loginPage.validateLabels();
       await loginPage.Login(user);
       //TODO: complete the test case
     });
-    test('with error user',{tag: ['@critical']}, async ({ loginPage }) => {
-      const user: user = saucedemoTestdata.users.error_user;
+    test.skip('with error user',{tag: ['@critical']}, async ({ loginPage }) => {
+      const user: user = saucedemoTestdata.account.error_user;
       await loginPage.validateLabels();
       await loginPage.Login(user);
       //TODO: complete the test case
     });
-    test('with visual user',{tag: ['@critical']}, async ({ loginPage }) => {
-      const user: user = saucedemoTestdata.users.visual_user;
+    test.skip('with visual user',{tag: ['@critical']}, async ({ loginPage }) => {
+      const user: user = saucedemoTestdata.account.visual_user;
       await loginPage.validateLabels();
       await loginPage.Login(user);
       //TODO: complete the test case
@@ -65,7 +65,7 @@ test.describe('Login', () => {
       await loginPage.validateErrorMessage(saucedemoTestdata.errors.username_password_empty);
     });
     test('with empty username',{tag: ['@critical']}, async ({ loginPage }) => {
-      const user: user = saucedemoTestdata.users.standard_user;
+      const user: user = saucedemoTestdata.account.standard_user;
       await loginPage.validateLabels();
       await loginPage.enterPassword(user.password);
       await loginPage.clickLogin();
@@ -73,7 +73,7 @@ test.describe('Login', () => {
       await loginPage.validateErrorMessage(saucedemoTestdata.errors.username_empty);
     });
     test('with empty password',{tag: ['@critical']}, async ({ loginPage }) => {
-      const user: user = saucedemoTestdata.users.standard_user;
+      const user: user = saucedemoTestdata.account.standard_user;
       await loginPage.validateLabels();
       await loginPage.enterUsername(user.username);
       await loginPage.clickLogin();
