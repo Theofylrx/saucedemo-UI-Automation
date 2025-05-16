@@ -21,6 +21,52 @@ The project tests the following features:
 
 ## Project Structure
 ```
+SAUCEDEMO-UI-AUTOMATION/
+├── .github/
+│   ├── actions/
+│   │   └── run-playwright-tests/
+│   │       └── action.yml                #
+│   └── workflows/
+│       ├── chromium-playwright.yml       #
+│       ├── firefox-playwright.yml        #
+│       └── safari-playwright.yml         #
+├── lib/
+│   ├── config/
+│   │   └── environments/
+│   │       ├── config.ts                 #
+│   │       ├── demo.ts                   #
+│   │       └── production.ts             #
+│   ├── helpers/
+│   │   └── baseTest.ts                   #
+│   ├── models/
+│   │   ├── config.ts                     #
+│   │   └── user.ts                       #
+│   ├── testdata/
+│   │   └── testdata.json                 #
+│   └── utils/
+│       └── utils.ts                      #
+├── node_modules/                         #
+├── Pages/
+│   ├── shared-components/
+│   │   ├── footer.ts                     #
+│   │   ├── mainNavigation.ts             #
+│   │   └── sideMenu.ts                   #
+│   ├── basePage.ts                       #
+│   ├── cartPage.ts                       #
+│   ├── checkoutPage.ts                   #
+│   ├── inventoryPage.ts                  #
+│   └── loginPage.ts                      #
+├── playwright-report/                    #
+├── test-results/                         #
+├── tests/  
+│   ├── login-test.spec.ts                #
+│   └── product-test.spec.ts              #
+├── .gitignore                            #
+├── environments.env                      #
+├── package-lock.json                     #
+├── package.json                          #
+├── playwright.config.ts                  #
+└── README.md                             #
 ```
 ## Setup Instructions
 ### Clone the Repository
@@ -57,9 +103,46 @@ npm run debug:saucedemo-chromium
 ```bash
 npm run debug:saucedemo-chromium
 ```
-## Running tests on CI
+
+### Project Components
+#### Pages
+Contains Page Object Models representing different pages of the application:
+
+**basePage.ts**: Base page with common methods
+**loginPage.ts**: Login page interactions
+**inventoryPage.ts**: Product inventory page
+**cartPage.ts**: Shopping cart page
+**checkoutPage.ts**: Checkout process
+
+#### Shared Components
+##### Reusable UI components:
+
+- **footer.ts**: Footer component
+- **mainNavigation.ts**: Main navigation bar
+- **sideMenu.ts**: Side menu panel
+
+#### Lib
+##### Core framework components:
+
+- **config/**: Environment configurations
+- **helpers/**: Testing utility helpers
+- **models/**: Data models
+- **testdata/**: Test data in JSON format
+- **utils/**: Utility functions
+
+#### Tests
+##### Test specifications:
+
+- **login-test.spec.ts**: Login functionality tests
+- **product-test.spec.ts**: Product-related tests
+
+## Running tests on CI/CD
 
 For each change made, committed and pushed to main on github, the tests get triggered automatically and start running. When tests are done running a report is created and displayed on the pipeline itself.
+
+- **chromium-playwright.yml**: Runs tests on Chromium
+- **firefox-playwright.yml**: Runs tests on Firefox
+- **safari-playwright.yml**: Runs tests on Safari
 
 View the github flows on this project for better understanding the setup.
 
