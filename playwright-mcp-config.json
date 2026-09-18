@@ -1,0 +1,49 @@
+{
+  "$schema": "https://github.com/microsoft/playwright-mcp/blob/main/src/config-schema.json",
+  "browser": {
+    "channel": "chrome",
+    "headless": false,
+    "slowMo": 500,
+    "contextOptions": {
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "ignoreHTTPSErrors": true
+    }
+  },
+  "network": {
+    "allowedOrigins": [
+      "https://www.saucedemo.com",
+      "https://jsonplaceholder.typicode.com",
+      "http://localhost:*"
+    ]
+  },
+  "capabilities": [
+    "core",
+    "pdf",
+    "vision",
+    "devtools"
+  ],
+  "testIdAttribute": "data-testid",
+  "timeouts": {
+    "action": 5000,
+    "navigation": 60000,
+    "expect": 5000,
+    "settle": 500
+  },
+  "console": {
+    "level": "info"
+  },
+  "snapshot": {
+    "mode": "full",
+    "boxes": true
+  },
+  "outputDir": "./mcp-output",
+  "saveSession": true,
+  "imageResponses": "allow",
+  "isolated": false,
+  "codegen": {
+    "lang": "typescript"
+  }
+}

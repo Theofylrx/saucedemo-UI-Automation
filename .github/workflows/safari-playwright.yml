@@ -1,10 +1,13 @@
-name: Safari > Saucedemo UI Playwright Tests with Typescript
+name: Safari > Saucedemo UI Tests (@critical)
 on:
   #schedule:
     # Schedule to run 8 times a day at specific hours in UTC+2
     #- cron: '0 0,3,6,9,12,15,18,21 * * *'
   push:
-    branches: 
+    branches:
+      - main
+  pull_request:
+    branches:
       - main
 permissions:
   contents: write
@@ -21,7 +24,7 @@ jobs:
         shardTotal: [4]
 
     container:
-      image: mcr.microsoft.com/playwright:v1.52.0-jammy
+      image: mcr.microsoft.com/playwright:v1.63.0-jammy
 
     steps:
     - name: Checkout repository

@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database for testing
+  postgres:
+    image: postgres:16-alpine
+    container_name: qa-postgres-db
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
+      POSTGRES_DB: testdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./lib/database/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U testuser -d testdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - qa-network
+
+  # Mock API Server (json-server for demo purposes)
+  mock-api:
+    image: node:20-alpine
+    container_name: qa-mock-api
+    working_dir: /app
+    command: sh -c "npm install -g json-server && json-server --watch /app/db.json --port 3000 --host 0.0.0.0"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./lib/api/mock-data:/app
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - qa-network
+
+  # Playwright Test Runner Container (optional - for CI/CD)
+  playwright:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: qa-playwright-runner
+    environment:
+      - ENVIRONMENT=DEMO
+      - DATABASE_URL=postgresql://testuser:testpass@postgres:5432/testdb
+      - API_BASE_URL=http://mock-api:3000
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+      mock-api:
+        condition: service_healthy
+    networks:
+      - qa-network
+    command: tail -f /dev/null  # Keep container running for manual test execution
+
+volumes:
+  postgres_data:
+
+networks:
+  qa-network:
+    driver: bridge

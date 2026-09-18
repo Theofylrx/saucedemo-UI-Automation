@@ -1,30 +1,86 @@
 {
-  "name": "saucedemo-ui-automation",
+  "name": "@qa-platform/saucedemo-test-library",
   "version": "1.0.0",
-  "description": "Saucedemo UI Automation Tests using playwright and Typescript.",
-  "main": "index.js",
+  "description": "Comprehensive test automation library for UI, API, and Database testing using Playwright and TypeScript. Deployable to GCP Artifact Registry.",
+  "main": "dist/lib/index.js",
+  "types": "dist/lib/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "AI_NOTES.md"
+  ],
   "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "prepublishOnly": "npm run build",
     "test:saucedemo-chromium": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --project=chromium",
     "test:saucedemo-firefox": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --project=firefox",
     "test:saucedemo-safari": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --project=safari",
+    "test:api": "ENVIRONMENT=DEMO npx playwright test --grep \"@api\" --project=chromium",
+    "test:db": "ENVIRONMENT=DEMO npx playwright test --grep \"@database\" --project=chromium",
+    "test:all": "ENVIRONMENT=DEMO npx playwright test",
     "debug:saucedemo-chromium": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --ui --project=chromium",
     "debug:saucedemo-firefox": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --ui --project=firefox",
-    "debug:saucedemo-safari": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --ui --project=safari"
+    "debug:saucedemo-safari": "ENVIRONMENT=DEMO npx playwright test --grep \"@critical\" --ui --project=safari",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "db:start": "docker-compose up -d postgres && echo '⏳ Waiting for PostgreSQL...' && sleep 3 && echo '✅ PostgreSQL ready!'",
+    "db:stop": "docker-compose down",
+    "db:restart": "npm run db:stop && npm run db:start",
+    "db:connect": "PGPASSWORD=testpass psql -h localhost -p 5432 -U testuser -d testdb",
+    "db:status": "docker-compose ps postgres",
+    "db:logs": "docker logs qa-postgres-db",
+    "mcp:explore": "./scripts/explore-page.sh",
+    "mcp:generate": "./scripts/generate-test.sh",
+    "mcp:demo": "node demo-mcp-stdio.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Theofylrx/saucedemo-UI-Automation.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "playwright",
+    "test-automation",
+    "qa",
+    "testing",
+    "ui-testing",
+    "api-testing",
+    "database-testing",
+    "e2e",
+    "typescript",
+    "page-object-model"
+  ],
+  "author": "Likhobo Mvana",
   "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://us-central1-npm.pkg.dev/your-gcp-project/npm-repo/",
+    "access": "restricted"
+  },
   "bugs": {
     "url": "https://github.com/Theofylrx/saucedemo-UI-Automation/issues"
   },
   "homepage": "https://github.com/Theofylrx/saucedemo-UI-Automation#readme",
+  "peerDependencies": {
+    "@playwright/test": "^1.63.0"
+  },
   "devDependencies": {
-    "@playwright/test": "^1.52.0",
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "@playwright/mcp": "^0.0.80",
+    "@playwright/test": "^1.63.0",
     "@types/node": "^22.15.17",
-    "playwright-ctrf-json-reporter": "^0.0.20"
+    "@types/pg": "^8.23.1",
+    "playwright-ctrf-json-reporter": "^0.0.20",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "pg": "^8.13.1",
+    "zod": "^4.5.4"
   }
 }

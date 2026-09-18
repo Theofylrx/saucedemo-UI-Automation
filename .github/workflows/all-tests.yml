@@ -1,0 +1,144 @@
+name: All Tests Suite (UI + API + Database)
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    # Run daily at midnight UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    # Allow manual triggering
+
+permissions:
+  contents: write
+  issues: write
+  statuses: write
+
+jobs:
+  all-tests:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+          POSTGRES_DB: testdb
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-jammy
+      options: --network-alias playwright
+
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install PostgreSQL client
+        run: |
+          apt-get update
+          apt-get install -y postgresql-client
+
+      - name: Wait for PostgreSQL
+        run: |
+          until pg_isready -h postgres -U testuser; do
+            echo "Waiting for PostgreSQL..."
+            sleep 2
+          done
+        env:
+          PGPASSWORD: testpass
+
+      - name: Initialize Database
+        run: |
+          PGPASSWORD=testpass psql -h postgres -U testuser -d testdb -f lib/database/init/01_create_tables.sql
+          PGPASSWORD=testpass psql -h postgres -U testuser -d testdb -f lib/database/init/02_seed_data.sql
+        env:
+          PGPASSWORD: testpass
+
+      - name: Run All Tests (UI + API + Database)
+        run: |
+          if [[ "${{ matrix.browser }}" == "firefox" ]]; then
+            export HOME=/root
+          fi
+          ENVIRONMENT=DEMO npx playwright test --project=${{ matrix.browser }}
+        env:
+          DATABASE_URL: postgresql://testuser:testpass@postgres:5432/testdb
+          API_BASE_URL: https://jsonplaceholder.typicode.com
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: all-tests-${{ matrix.browser }}-results
+          path: |
+            ./test-results/
+            ./test-results/ctrf-report.json
+          retention-days: 7
+        if: always()
+
+      - name: Publish CTRF Test Summary Results
+        shell: bash
+        run: npx github-actions-ctrf ./test-results/ctrf-report.json
+        if: always()
+
+  merge-reports:
+    needs: [all-tests]
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download All Test Results
+        uses: actions/download-artifact@v4
+        with:
+          path: all-test-results
+          pattern: all-tests-*-results
+          merge-multiple: false
+
+      - name: Merge All CTRF Reports
+        shell: bash
+        run: |
+          mkdir -p ctrf-reports
+          find all-test-results -name 'ctrf-report.json' | while read file; do
+            browser=$(echo "$file" | grep -oP 'all-tests-\K[^-]+')
+            cp "$file" "ctrf-reports/${browser}-ctrf-report.json"
+          done
+          npx merge-ctrf ctrf-reports
+        if: always()
+
+      - name: Publish Merged Test Summary
+        shell: bash
+        run: npx github-actions-ctrf ctrf-reports/ctrf-report.json
+        if: always()

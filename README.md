@@ -1,238 +1,73 @@
-# saucedemo-UI-Automation
+# **Skills Test: Test Platform & QA Engineering**
 
-## Project Overview
+**Role:** Software Engineering, Test Platform and QA
 
-This project demonstrates automated UI testing for the [saucedemo](https://www.saucedemo.com/) using Playwright, Typescript, and GithubActions with a Playwright Ctrf Reporter.
+**Objective:** This exercise aims to evaluate your technical proficiency in designing and implementing robust test automation frameworks. We are looking for candidates who can demonstrate strong coding practices, architectural thinking for reusability and maintainability, and a clear understanding of the strengths and weaknesses of different testing platforms.
 
-The project tests the following features:
-- Login
-- Inventory
-- Cart
-- Checkout
+**Scenario:** You will be building automated test solutions against a publicly available, stable, and simple e-commerce website: [`https://www.saucedemo.com/`](https://www.saucedemo.com/)
 
-## Prerequisites
-- Nodejs latest version or one version lower than the latest,
-- Playwright latest version or one version lower than the latest,
-- Github to run github Actions,
-- Playwright Ctrf Reporter for Displaying reports within Github,
-- Typescript,
-- Playwright Browsers(Chromium, Firefox & Webkit(Safari) ),
-- Vscode or any other IDE that supports Node apps/projects.
+**Test Outcomes & Deliverables:**
 
-## Project Structure
-```
-SAUCEDEMO-UI-AUTOMATION/
-├── .github/
-│   ├── actions/
-│   │   └── run-playwright-tests/
-│   │       └── action.yml                #
-│   └── workflows/
-│       ├── chromium-playwright.yml       #
-│       ├── firefox-playwright.yml        #
-│       └── safari-playwright.yml         #
-├── lib/
-│   ├── config/
-│   │   └── environments/
-│   │       ├── config.ts                 #
-│   │       ├── demo.ts                   #
-│   │       └── production.ts             #
-│   ├── helpers/
-│   │   └── baseTest.ts                   #
-│   ├── models/
-│   │   ├── config.ts                     #
-│   │   └── user.ts                       #
-│   ├── testdata/
-│   │   └── testdata.json                 #
-│   └── utils/
-│       └── utils.ts                      #
-├── node_modules/                         #
-├── Pages/
-│   ├── shared-components/
-│   │   ├── footer.ts                     #
-│   │   ├── mainNavigation.ts             #
-│   │   └── sideMenu.ts                   #
-│   ├── basePage.ts                       #
-│   ├── cartPage.ts                       #
-│   ├── checkoutPage.ts                   #
-│   ├── inventoryPage.ts                  #
-│   └── loginPage.ts                      #
-├── playwright-report/                    #
-├── test-results/                         #
-├── tests/  
-│   ├── login-test.spec.ts                #
-│   └── product-test.spec.ts              #
-├── .gitignore                            #
-├── environments.env                      #
-├── package-lock.json                     #
-├── package.json                          #
-├── playwright.config.ts                  #
-└── README.md                             #
-```
-## Setup Instructions
-### Clone the Repository
-```bash
-git clone 'https://github.com/Theofylrx/saucedemo-UI-Automation'
-cd saucedemo-UI-Automation
-```
-### Download dependencies base on the package-lock.json
-```bash
-npm ci
-```
-## Run tests locally on the following playwright browsers:
-### chromium
-```bash
-npm run test:saucedemo-chromium
-```
-### firefox
-```bash
-npm run test:saucedemo-firefox
-```
-### safari
-```bash
-npm run test:saucedemo-safari
-```
-### chromium ui-mode
-```bash
-npm run debug:saucedemo-chromium
-```
-### firefox ui-mode
-```bash
-npm run debug:saucedemo-chromium
-```
-### safari ui-mode
-```bash
-npm run debug:saucedemo-chromium
-```
+Your submission should demonstrate your ability to:
 
-### Project Components
-#### Pages
-Contains Page Object Models representing different pages of the application:
+1. **Design a Core Test Library:** Create reusable and well-structured test library components for common functionalities encountered on `saucedemo.com`. A key example is a login mechanism (e.g., encapsulating the steps to log in with a given username and password). These libraries should promote reusability across multiple tests.
 
-**basePage.ts**: Base page with common methods
-**loginPage.ts**: Login page interactions
-**inventoryPage.ts**: Product inventory page
-**cartPage.ts**: Shopping cart page
-**checkoutPage.ts**: Checkout process
+2. **Develop a Functional Test Suite:** Build a comprehensive test suite that specifically validates the functionality of adding items to the shopping cart and completing the checkout process on `saucedemo.com`. This suite should leverage the core test libraries you've developed.
 
-#### Shared Components
-##### Reusable UI components:
+3. **Add API Testing Support:** Extend the framework to support API-level testing. Demonstrate how your platform can execute and validate HTTP-based API tests. Include at least one example API test that shows how API and UI tests can coexist and share utilities within the same framework.
 
-- **footer.ts**: Footer component
-- **mainNavigation.ts**: Main navigation bar
-- **sideMenu.ts**: Side menu panel
+4. **Add Database Testing Support:** Extend the framework to support database-level validation. Demonstrate how your platform can connect to and query a database (e.g., PostgreSQL, MySQL, or SQLite) to assert on data state — for example, verifying that a completed order is persisted correctly.
 
-#### Lib
-##### Core framework components:
+> **Note:** The target site ([`https://www.saucedemo.com/`](https://www.saucedemo.com/)) does **not** expose a public API or database. These requirements are intentionally open-ended: we want to see how you design a framework that is *capable* of supporting API and database testing. You are free to mock, stub, or stand up your own sample API/database to demonstrate the framework's capabilities — the focus is on the architecture and extensibility, not on testing saucedemo.com's (non-existent) backend.
 
-- **config/**: Environment configurations
-- **helpers/**: Testing utility helpers
-- **models/**: Data models
-- **testdata/**: Test data in JSON format
-- **utils/**: Utility functions
+5. **Document Your Use of AI:** We actively encourage the use of AI tools for this exercise. In return, we ask you to be transparent about how you used them. Include an `AI_NOTES.md` file in your repository that honestly describes how AI assisted your work — for example, which tools you used, what you used them for (scaffolding, debugging, test generation, documentation, etc.), what you accepted or rejected, and where you applied your own judgement. There is no penalty for using AI heavily; we simply value honesty and your understanding of the resulting solution.
 
-#### Tests
-##### Test specifications:
+**Important Implementation Requirements:**
 
-- **login-test.spec.ts**: Login functionality tests
-- **product-test.spec.ts**: Product-related tests
+* **Playwright with TypeScript**
 
-## Running tests on CI/CD
+    * **Core Library:** Implement the common functionalities (e.g., login) as reusable TypeScript functions or classes using Playwright. Ideally this is something that can be packaged and deployed to a company NPM repository as [GCP Artifact Registry](https://cloud.google.com/artifact-registry/docs).
+    * **Test Suite:** Develop the add-to-cart and checkout tests using Playwright in TypeScript, leveraging your core library. Add as many tests as you feel is a reasonable use of your time to demonstrate your proficiency.
+    * **API Testing:** Integrate API tests into the same framework. These should be runnable alongside or independently of UI tests, with shared configuration and utilities where applicable.
+    * **Database Testing:** Integrate database assertions into the framework. Provide a clear pattern for setting up a DB connection, running queries, and tearing down state — demonstrating how end-to-end data integrity can be verified.
 
-For each change made, committed and pushed to main on github, the tests get triggered automatically and start running. When tests are done running a report is created and displayed on the pipeline itself.
+**Code Quality & Visibility:**
 
-- **chromium-playwright.yml**: Runs tests on Chromium
-- **firefox-playwright.yml**: Runs tests on Firefox
-- **safari-playwright.yml**: Runs tests on Safari
+* All code for this exercise **must be open-sourced** in your git repository.
+* We expect to see **regular, meaningful commits** throughout your development process. This allows us to observe your iterative approach, thought process, and commitment to version control best practices.
+* Organize your repository and code in a logical and professional manner, demonstrating good software engineering principles (e.g., clear folder structure, meaningful variable names, appropriate comments where necessary, use of build tools if applicable).
 
-View the github flows on this project for better understanding the setup.
+**Evaluation Criteria:**
 
-here's a snippet example:
-```bash
-name: Chrome > Saucedemo UI Playwright Tests with Typescript
-on:
-  push:
-    branches: 
-      - main
-permissions:
-  contents: write
-  issues: write
-  statuses: write
-  deployments: write
-jobs:
-  run-ui-tests:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        shardIndex: [1, 2, 3, 4]
-        shardTotal: [4]
+* **Technical skills**
+    * **Problem-Solving & Efficiency:**
+        * Elegant solutions to common automation challenges (e.g., element locators, waiting strategies).
+        * Efficiency of the implemented tests.
+    * **Technical Proficiency (Coding):**
+        * Correctness and functionality of the tests.
+        * Adherence to best practices.
+        * Effective use of Playwright APIs.
+        * Quality and design of API and database test utilities.
+    * **Software Design & Architecture:**
+        * Clean separation of concerns.
+        * Scalability considerations for future test growth.
+        * Readability and organization of the codebase.
+        * Modularity, reusability, and maintainability of the core test libraries.
+    * **Version Control & Documentation:**
+        * Consistent and meaningful commit history.
+        * Clear README files in your repositories explaining how to set up and run the tests.
 
-    container:
-      image: mcr.microsoft.com/playwright:v1.52.0-jammy
+**Instructions:**
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Run Playwright tests
-      uses: ./.github/actions/run-playwright-tests
-      with:
-        environment: 'DEMO'
-        tag: "@critical"
-        browser: "chromium"
-        shardIndex: ${{ matrix.shardIndex }}
-        shardTotal: ${{ matrix.shardTotal }}
+* You are free to use any build tools, libraries and frameworks you deem appropriate. We are looking to measure your decision process in selecting and using tools.
+* You are free to use Google search, books, AI coding assistants, and any other resources that you want to, but be aware that you will be judged heavily on your understanding of your solution. **We allow and encourage the use of AI for this task.**
+* If you use AI, please be honest about it by including an `AI_NOTES.md` file describing how you used it (see deliverable 5 above).
+* Ensure your README provides clear instructions on how to set up dependencies and run your tests.
+* Feel free to add any additional comments or explanations in your repository README that you believe will enhance our understanding of your work.
 
-  merge-reports:
-    needs: [run-ui-tests]
-    runs-on: ubuntu-latest
-    if: always()
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
+## CodeSubmit
 
-      - name: Install dependencies
-        run: npm ci
+Please organize, design, test, and document your code as if it were
+going into production - then push your changes to the master branch.
 
-      - name: Download All Reports
-        uses: actions/download-artifact@v4
-        with:
-          path: all-reports
-          pattern: saucedemo-report-*
-          merge-multiple: false
-
-      - name: Merge All CTRF Test Summary Results
-        shell: bash
-        run: |
-          mkdir -p ctrf-reports
-          find all-reports/saucedemo-report-*/test-results -name 'ctrf-report.json' | while read file; do
-            cp "$file" "ctrf-reports/$(basename $(dirname $(dirname $file)))-ctrf-report.json"
-          done
-          npx merge-ctrf ctrf-reports
-
-      - name: Publish CTRF Test Summary Results
-        shell: bash
-        run: npx github-actions-ctrf ctrf-reports/ctrf-report.json
-        if: always()
-```
-on the above snippet of our YML Github Actions workflow we have the following:
-```
-- Name of the pipeline,
-- Triggers to run the pipeline,
-- permissions,
-- jobs
-  - run-ui-tests
-  - merge-reports
-```
-
-## Jobs
-#### run-ui-tests >
-This job sets up the container to run the tests on, then checks-out the repo with the tests then sets up node, installs the dependencies required to run the tests then goes ahead and runs the tests.
-#### merge-reports >
-This job waits for run-ui-tests job to finish running, then goes installs required dependencies to merge reports, then downloads all reports uploaded in a specific folder, merges them into a ctrf report and publishes them so that they are visible within the Github actions report when the tests are done running, whether failing or passing.
+Have fun coding! 🚀

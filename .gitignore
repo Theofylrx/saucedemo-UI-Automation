@@ -9,3 +9,7 @@ node_modules/
 /ui/node_modules/
 /ui/test-results/
 /ui//playwright-report/
+
+# MCP runtime artifacts
+mcp-output/
+mcp-server.log

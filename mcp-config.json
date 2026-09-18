@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp-server"],
+      "description": "Playwright MCP Server for browser automation",
+      "enabled": true
+    }
+  },
+  "browserConfig": {
+    "headless": false,
+    "slowMo": 1000,
+    "defaultTimeout": 30000
+  },
+  "allowedOrigins": [
+    "https://www.saucedemo.com",
+    "https://jsonplaceholder.typicode.com"
+  ],
+  "capabilities": {
+    "navigation": true,
+    "interaction": true,
+    "screenshot": true,
+    "assertion": true,
+    "apiTesting": true,
+    "databaseQuery": false
+  }
+}
